@@ -1,5 +1,19 @@
-// define(function(require) {
-    // var $ = require('jquery')
+;
+(function(root, factory) {
+
+    //amd 
+    if(typeof define === 'function' && define.amd) {
+        define(['$'], factory);
+    } else if(typeof exports === 'object') { //CommonJS
+
+        // Node, CommonJS之类的
+        module.exports = factory(require('$'));
+    } else {
+
+        // 浏览器全局变量(root 即 window)
+        root.Loading = factory(root.Zepto || root.jQuery || $);
+    }
+})(this, function($) {
     var Loading = function(CFG) {
         this.cfg = {
             target: CFG.target || null,
@@ -48,5 +62,5 @@
             $(this.cfg.target).remove();
         }
     }
-    // return Loading;
-// });
+    return Loading;
+});
