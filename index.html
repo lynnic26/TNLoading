@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#loading-container {
+			width: 1187px;
+			height: 500px;
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div id="loading-container"></div>
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="loading.js"></script>
+	<script>
+		var loading = new Loading({
+			'target': '#loading-container'
+		});
+        loading.start();
+        setTimeout(function() {
+        	loading.destroy();
+        }, 3000)
+	</script>
+</body>
+</html>
