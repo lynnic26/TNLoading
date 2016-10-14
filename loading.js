@@ -1,3 +1,11 @@
+/*
+ * Created with Sublime Text 3.
+ * github: https://github.com/lynnic26/TNLoading
+ * Author: Lynnic
+ * Date: 2015-08-05
+ * Time: 11:27:55
+ * Contact: webfrontend@outlook.com
+ */
 ;
 (function(root, factory) {
 
@@ -19,34 +27,50 @@
             target: CFG.target || null,
             text: '请稍微等候一下，牛牛正在努力加载中'
         }
-        this.loadingTpl = '<div class="loading-content">' + 
-                              '<img src="http://img4.tuniucdn.com/img/20160315/hotel_2016/common/loading_new.gif"></img>' + 
-                              '<span class="loading-text">' + this.cfg.text + '</span>' + 
-                          '</div>';
+        this.$loadingEl = null;
     } 
     Loading.prototype = {
     	renderUI: function() {
-            $(this.cfg.target).append($(this.loadingTpl));
-    	},
+            this.$loadingEl = $(
+                                    '<div class="loading-content">' + 
+                                       '<img src="http://img4.tuniucdn.com/img/20160315/hotel_2016/common/loading_new.gif"></img><br>' + 
+                                       '<span class="loading-text">' + this.cfg.text + '</span>' + 
+                                    '</div>'
+                                );
+            if(this.cfg.target) {
+                $(this.cfg.target).append(this.$loadingEl);
+            } else {
+                this.$mask = $('<div class="loading-mask"></div>');
+                $('body').append(this.$mask).append(this.$loadingEl);
+            }
+        },
     	syncUI: function() {	
-    		$(this.cfg.target).css({
-                'position': 'relative',
-                'text-align': 'center'
-    		});
-    		$(this.loadingTpl).css({
-                'position': 'absolute',
-                'top': '50%',
-                'left': '50%',
-                'transform': 'translate(-50% -50%)' 
-    		});
-    		$(this.loadingTpl).find('img').css({
-    			'display': 'block',
-                'width': '120px',
-                'height': '120px'
-    		}); 
-    		$('.loading-text').css({
+            if(this.cfg.target) {
+                this.$loadingEl.css({
+                    'text-align': 'center',
+                    'width': '100%'
+        		});
+            } else {
+                this.$mask.css({
+                    'height': '100%',
+                    'width': '100%',
+                    'background-color': '#000',
+                    'opacity': .1,
+                    'position': 'fixed',
+                    'left': 0,
+                    'top': 0
+                });
+                this.$loadingEl.css({
+                    'text-align': 'center',
+                    'width': '100%',
+                    'position': 'fixed',
+                    'top': '50%',
+                    'transform': 'translateY(-50%)'
+                });
+            }
+    		this.$loadingEl.find('.loading-text').css({
                 'color': 'green',
-                'display': 'block',
+                'display': 'inline-block',
                 'margin-top': '20px',
                 'font-size': '12px'
     		});
@@ -59,7 +83,12 @@
         	this.render();
         },
         destroy: function() {
-            $(this.cfg.target).remove();
+            if(this.cfg.target) {
+                $(this.cfg.target).remove();
+            }else {
+                this.$mask.remove();
+                this.$loadingEl.remove();
+            }
         }
     }
     return Loading;
