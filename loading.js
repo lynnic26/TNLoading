@@ -6,7 +6,7 @@
  * Contact: webfrontend@outlook.com
  */
 ;
-(function(root, factory) {
+(function(globalName, root, factory) {
 
     //amd 
     if(typeof define === 'function' && define.amd) {
@@ -18,9 +18,9 @@
     } else {
 
         // 浏览器全局变量(root 即 window)
-        root.Loading = factory(root.Zepto || root.jQuery || $);
+        root[globalName] = factory(root.Zepto || root.jQuery || $);
     }
-})(this, function($) {
+})('Loading', this, function($) {
     var Loading = function(CFG) {
         this.cfg = {
             target: CFG.target || null,
