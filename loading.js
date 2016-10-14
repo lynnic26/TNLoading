@@ -2,8 +2,7 @@
  * Created with Sublime Text 3.
  * github: https://github.com/lynnic26/TNLoading
  * Author: Lynnic
- * Date: 2015-08-05
- * Time: 11:27:55
+ * Date: 2016-10-13
  * Contact: webfrontend@outlook.com
  */
 ;
